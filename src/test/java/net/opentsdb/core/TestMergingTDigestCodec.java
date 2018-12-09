@@ -47,7 +47,7 @@ private TDigest digest;
     final byte[] raw = buf.array();
     Histogram histo = codec.decode(raw, false);
     assertArrayEquals(raw, histo.histogram(false));
-    assertEquals(40.649, histo.percentile(95.0), 0.001);
+    assertEquals(42.5, histo.percentile(95.0), 0.001);
     
     byte[] with_id = new byte[raw.length + 1];
     with_id[0] = 42;
@@ -55,7 +55,7 @@ private TDigest digest;
     histo = codec.decode(raw, false);
     assertArrayEquals(raw, histo.histogram(false));
     assertArrayEquals(with_id, histo.histogram(true));
-    assertEquals(40.649, histo.percentile(95.0), 0.001);
+    assertEquals(42.5, histo.percentile(95.0), 0.001);
     
     try {
       codec.decode(null, false);

@@ -93,14 +93,14 @@ public class TestMergingTDigestImplementation {
     byte[] raw = buf.array();
     
     histo.fromHistogram(raw, false);
-    assertEquals(40.649, histo.percentile(95.0), 0.001);
+    assertEquals(42.5, histo.percentile(95.0), 0.001);
     
     byte[] with_id = new byte[raw.length + 1];
     with_id[0] = 42;
     System.arraycopy(raw, 0, with_id, 1, raw.length);
     
     histo.fromHistogram(with_id, true);
-    assertEquals(40.649, histo.percentile(95.0), 0.001);
+    assertEquals(42.5, histo.percentile(95.0), 0.001);
     
     try {
       histo.fromHistogram(new byte[] { 0, 0, 0, 2, 64, 89, 0, 0, 0, 0, 0, 0, 
@@ -131,7 +131,7 @@ public class TestMergingTDigestImplementation {
         new MergingTDigestImplementation(42);
     histo.setDigest(digest);
     
-    assertEquals(40.649, histo.percentile(95.0), 0.001);
+    assertEquals(42.5, histo.percentile(95.0), 0.001);
     assertEquals(24.0, histo.percentile(50.0), 0.001);
     assertEquals(1.0, histo.percentile(0.0), 0.001);
     
@@ -157,7 +157,7 @@ public class TestMergingTDigestImplementation {
     assertEquals(3, percentiles.size());
     assertEquals(1.0, percentiles.get(0), 0.001);
     assertEquals(24.0, percentiles.get(1), 0.001);
-    assertEquals(40.649, percentiles.get(2), 0.001);
+    assertEquals(42.5, percentiles.get(2), 0.001);
     
     try {
       histo.percentiles(Lists.<Double>newArrayList(0D, -1D, 95.0D));
@@ -206,7 +206,7 @@ public class TestMergingTDigestImplementation {
         (MergingTDigestImplementation) histo.clone();
     assertNotSame(histo, copy);
     assertNotSame(histo.getDigest(), copy.getDigest());
-    assertEquals(40.649, histo.percentile(95.0), 0.001);
+    assertEquals(42.5, histo.percentile(95.0), 0.001);
   }
   
   @Test
@@ -226,7 +226,7 @@ public class TestMergingTDigestImplementation {
     
     histo.aggregate(histo2, HistogramAggregation.SUM);
     
-    assertEquals(77.6, histo.percentile(95.0), 0.01);
+    assertEquals(89.3, histo.percentile(95.0), 0.01);
     assertEquals(19.5, histo.percentile(50.0), 0.01);
     assertEquals(1.0, histo.percentile(0.0), 0.01);
     
@@ -264,7 +264,7 @@ public class TestMergingTDigestImplementation {
     histo.aggregate(Lists.<Histogram>newArrayList(histo2, histo3), 
         HistogramAggregation.SUM);
     
-    assertEquals(70.579, histo.percentile(95.0), 0.001);
+    assertEquals(89.3, histo.percentile(95.0), 0.001);
     assertEquals(22.4, histo.percentile(50.0), 0.01);
     assertEquals(1.0, histo.percentile(0.0), 0.01);
     
