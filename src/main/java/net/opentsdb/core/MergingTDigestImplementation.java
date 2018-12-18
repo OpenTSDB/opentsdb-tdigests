@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
-import com.tdunning.math.stats.AVLTreeDigest;
+import com.tdunning.math.stats.MergingDigest;
 import com.tdunning.math.stats.TDigest;
 
 import net.opentsdb.core.Histogram;
@@ -80,7 +80,7 @@ public class MergingTDigestImplementation implements Histogram {
       encoded = raw;
     }
     final ByteBuffer buf = ByteBuffer.wrap(encoded);
-    digest = AVLTreeDigest.fromBytes(buf);
+    digest = MergingDigest.fromBytes(buf);
   }
 
   public double percentile(double p) {
